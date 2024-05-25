@@ -1,0 +1,80 @@
+{% extends "posts_div.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+    <section class="all-posts">
+        <div class="container">
+            <h1 class="my-4 text-center">Последние записи блога</h1>
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm h-100 d-flex flex-column">
+                            <div class="card-body d-flex flex-column flex-grow-1">
+                                <h4 class="card-title"
+                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ article.title }}</h4>
+                                <p class="card-text flex-grow-1">{{ article.text |safe| truncate(150) }}</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{{ url_for('main.post_detail', post_id=article.id) }}"
+                                       class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                </div>
+                                <small class="text-muted">{{ article.created_at }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <div style="height: 20px;"></div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if pagination.has_prev %}
+                <li class="page-item"><a class="page-link custom-pagination-link" href="{{ url_for('main.home', page=pagination.prev_num) }}">Предыдущая</a>
+                </li>
+            {% endif %}
+            {% for page_num in pagination.iter_pages() %}
+                <li class="page-item {{ 'active' if page_num == pagination.page else '' }}">
+                    <a class="page-link custom-pagination-link" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+                </li>
+            {% endfor %}
+            {% if pagination.has_next %}
+                <li class="page-item"><a class="page-link custom-pagination-link" href="{{ url_for('main.home', page=pagination.next_num) }}">Следующая</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div align="center">
+        <a href="/create-posts">
+            <button type="button" class="btn btn-lg custom-create-post-button">Создать пост</button>
+        </a>
+    </div>
+
+    <style>
+        .custom-create-post-button {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .custom-create-post-button:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .custom-pagination-link {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+
+        .custom-pagination-link:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+{% endblock %}
+

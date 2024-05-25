@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title%}Вход в систему{% endblock %}
+{% block content%}
+<form method="POST">
+    <h3 align="center">Вход в систему</h3>
+    <div class="form-group">
+        <label for="email">Электронная почта</label>
+        <input type="text" id="email" name="email" class="form-control" placeholder="Введите адрес электронной почты"/>
+        <label for="password">Пароль</label>
+        <input type="password" id="password1" name="password1" class="form-control" placeholder="Введите пароль"/>
+    </div>
+    <br/>
+    <strong>Если у вас еще нет аккаунта, зарегистрируйтесь <a href="/sign-up">здесь</a></strong>
+    <div align="center"><button class="btn btn-primary" type="submit">Вход</button></div>
+</form>
+{% endblock %}
